@@ -23,6 +23,13 @@ namespace chess_project {
             Console.WriteLine("   A B C D E F G H");
         }
 
+        public static ChessPosition readChessPosition() {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int row = int.Parse(s[1] + "");
+            return new ChessPosition(column, row);
+        }
+
         public static void printPiece(Piece piece) {
             if(piece.color == Color.White) {
                 Console.Write(piece);

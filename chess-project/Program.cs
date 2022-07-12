@@ -4,10 +4,21 @@ using chess_project.Rules;
 namespace chess_project {
     class Program { 
         static void Main(string[] args) {
-            ChessBoard board = new ChessBoard(8, 8);
             try {
-                board.putPiece(new King(board, Color.Black), new Position(0, 0));
-                BoardBuilder.printBoard(board);
+                Game chessGame = new Game();
+
+                while (!chessGame.finished) {
+                    Console.Clear();
+                    BoardBuilder.printBoard(chessGame.board);
+
+                    Console.Write("Origin: ");
+                    Position origin = BoardBuilder.readChessPosition().toMatrixPosition();
+                    Console.Write("Destiny: ");
+                    Position destiny = BoardBuilder.readChessPosition().toMatrixPosition();
+
+                    chessGame.makeMoviment(origin, destiny);
+                }
+
             } catch (BoardException e) {
                 Console.WriteLine(e.Message);
             }

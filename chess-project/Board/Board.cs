@@ -31,9 +31,14 @@ namespace chess_project.Board {
             piece.pos = pos;
         }
 
-        public void removePiece(Piece piece, Position pos) {
+        public Piece removePiece(Position pos) {
+            if(this.piece(pos) == null) {
+                return null;
+            }
+            Piece aux = this.piece(pos);
+            aux.pos = null;
             this.pieces[pos.row, pos.col] = null;
-            piece.pos = null;
+            return aux;
         }
 
         public bool validPosition(Position pos) {

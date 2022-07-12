@@ -18,5 +18,9 @@ namespace chess_project.Board {
             this.moviments = 0;
         }
 
+        public void incrementMoviments() {
+            this.moviments++;
+        }
+
     }
 }

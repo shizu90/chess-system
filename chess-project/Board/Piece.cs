@@ -9,9 +9,9 @@ namespace chess_project.Board {
         public Position pos { get; set; }
         public Color color { get; protected set; }
         public int moviments { get; protected set; }
-        public Board board { get; protected set; }
+        public ChessBoard board { get; protected set; }
 
-        public Piece(Position pos, Color color, Board board) {
+        public Piece(Position pos, Color color, ChessBoard board) {
             this.pos = pos;
             this.color = color;
             this.board = board;

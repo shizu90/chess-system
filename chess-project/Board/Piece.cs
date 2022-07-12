@@ -24,5 +24,21 @@ namespace chess_project.Board {
             this.moviments++;
         }
 
+        public bool existsPossibleMoviments() {
+            bool[,] mat = possibleMoviments();
+            for(int i=0;i<this.board.rows;i++) {
+                for(int j = 0; j < this.board.cols; j++) {
+                    if (mat[i,j]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool canMoveTo(Position pos) {
+            return this.possibleMoviments()[pos.row, pos.col];
+        }
+
     }
 }

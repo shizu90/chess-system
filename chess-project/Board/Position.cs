@@ -13,6 +13,11 @@ namespace chess_project.Board {
             this.row = row;
             this.col = col;
         }
-    
+
+        public override string ToString() {
+            return this.row
+                + ", "
+                + this.col;
+        }
     }
 }

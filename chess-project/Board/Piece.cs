@@ -11,8 +11,8 @@ namespace chess_project.Board {
         public int moviments { get; protected set; }
         public ChessBoard board { get; protected set; }
 
-        public Piece(Position pos, Color color, ChessBoard board) {
-            this.pos = pos;
+        public Piece(Color color, ChessBoard board) {
+            this.pos = null;
             this.color = color;
             this.board = board;
             this.moviments = 0;

@@ -10,9 +10,14 @@ namespace chess_project {
                 while (!chessGame.finished) {
                     Console.Clear();
                     BoardBuilder.printBoard(chessGame.board);
-
                     Console.Write("Origin: ");
                     Position origin = BoardBuilder.readChessPosition().toMatrixPosition();
+
+                    bool[,] possiblePositions = chessGame.board.piece(origin).possibleMoviments();
+                    
+                    Console.Clear();
+                    BoardBuilder.printBoardMoviments(chessGame.board, possiblePositions);
+
                     Console.Write("Destiny: ");
                     Position destiny = BoardBuilder.readChessPosition().toMatrixPosition();
 

@@ -28,7 +28,7 @@ namespace chess_project.Rules {
         }
 
         private void putPieces() {
-            this.board.putPiece(new Rook(board, Color.White), new ChessPosition('a', 1).toMatrixPosition());
+            this.board.putPiece(new King(board, Color.White), new ChessPosition('a', 1).toMatrixPosition());
         }
     
     }

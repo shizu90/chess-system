@@ -14,6 +14,11 @@ namespace chess_project.Board {
             this.col = col;
         }
 
+        public void defineValue(int row, int column) {
+            this.row = row;
+            this.col = column;
+        }
+
         public override string ToString() {
             return this.row
                 + ", "

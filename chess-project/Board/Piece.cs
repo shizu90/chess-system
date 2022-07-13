@@ -24,6 +24,10 @@ namespace chess_project.Board {
             this.moviments++;
         }
 
+        public void decrementMoviments() {
+            this.moviments--;
+        }
+
         public bool existsPossibleMoviments() {
             bool[,] mat = possibleMoviments();
             for(int i=0;i<this.board.rows;i++) {

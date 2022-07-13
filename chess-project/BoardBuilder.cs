@@ -16,6 +16,9 @@ namespace chess_project {
             Console.WriteLine();
             Console.WriteLine("Turn: " + chessGame.turn);
             Console.WriteLine("Waiting for: " + chessGame.currentPlayer + " player");
+            if(chessGame.checkmate) {
+                Console.WriteLine("Checkmate");
+            }
         }
         public static void printBoard(ChessBoard board) {
             for(int i=0; i < board.rows; i++) {

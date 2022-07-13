@@ -13,18 +13,20 @@ namespace chess_project.Rules {
         public bool finished { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> catchedPieces;
+        public bool checkmate { get; private set; }
 
         public Game() {
             this.board = new ChessBoard(8, 8);
             this.turn = 1;
             this.currentPlayer = Color.White;
             this.finished = false;
+            this.checkmate = false;
             this.pieces = new HashSet<Piece>();
             this.catchedPieces = new HashSet<Piece>();
             putPieces();
         }
 
-        public void makeMoviment(Position origin, Position destiny) {
+        public Piece makeMoviment(Position origin, Position destiny) {
             Piece piece = board.removePiece(origin);
             piece.incrementMoviments();
             Piece catchPiece = board.removePiece(destiny);
@@ -32,10 +34,32 @@ namespace chess_project.Rules {
             if(catchPiece != null) {
                 this.catchedPieces.Add(catchPiece);
             }
+            return catchPiece;
+        }
+
+        public void undoMove(Position origin, Position destiny, Piece catchedPiece) {
+            Piece piece = this.board.removePiece(destiny);
+            piece.decrementMoviments();
+            if(catchedPiece != null) {
+                this.board.putPiece(catchedPiece, destiny);
+                catchedPieces.Remove(catchedPiece);
+            }
+            this.board.putPiece(piece, origin);
         }
 
         public void makeMove(Position origin, Position destiny) {
-            makeMoviment(origin, destiny);
+            Piece catchedPiece = makeMoviment(origin, destiny);
+            
+            if(checkMate(this.currentPlayer)) {
+                undoMove(origin, destiny, catchedPiece);
+                throw new BoardException("If you do that move, your king will be in check");
+            }
+            if(checkMate(enemy(this.currentPlayer))) {
+                this.checkmate = true;
+            } else {
+                this.checkmate = false;
+            }
+
             this.turn++;
             changePlayer();
         }
@@ -87,6 +111,39 @@ namespace chess_project.Rules {
             return aux;
         }
 
+        private Color enemy(Color color) {
+            if(color == Color.White) {
+                return Color.Black;
+            } else {
+                return Color.White;
+            }
+        }
+
+        private Piece king(Color color) {
+            foreach(Piece x in piecesInGame(color)) {
+                if(x is King) {
+                    return x;
+                }
+            }
+            return null;
+        }
+
+        public bool checkMate(Color color) {
+            Piece king = this.king(color);
+            if(king == null) {
+                throw new BoardException("Inexistent king in game");
+            }
+
+            foreach (Piece x in piecesInGame(enemy(color))) {
+                bool[,] mat = x.possibleMoviments();
+                if (mat[king.pos.row, king.pos.col]) {
+                    return true;
+                }
+            }
+            return false;
+        
+        }
+        
         public void putNewPiece(char column, int row, Piece piece) {
             this.board.putPiece(piece, new ChessPosition(column, row).toMatrixPosition());
             this.pieces.Add(piece);

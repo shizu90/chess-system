@@ -11,10 +11,7 @@ namespace chess_project {
                 while (!chessGame.finished) {
                     try {
                         Console.Clear();
-                        BoardBuilder.printBoard(chessGame.board);
-                        Console.WriteLine("Turn: " + chessGame.turn);
-                        Console.WriteLine("Waiting for: " + chessGame.currentPlayer + " player");
-
+                        BoardBuilder.printChessGame(chessGame);
                         Console.Write("Origin: ");
                         Position origin = BoardBuilder.readChessPosition().toMatrixPosition();
                         chessGame.validateOriginPosition(origin);

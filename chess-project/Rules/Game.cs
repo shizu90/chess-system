@@ -182,8 +182,30 @@ namespace chess_project.Rules {
             this.putNewPiece('h', 1, new Rook(this.board, Color.White));
             this.putNewPiece('a', 8, new Rook(this.board, Color.Black));
             this.putNewPiece('h', 8, new Rook(this.board, Color.Black));
-            this.putNewPiece('d', 1, new King(this.board, Color.White));
-            this.putNewPiece('d', 8, new King(this.board, Color.Black));
+            this.putNewPiece('b', 1, new Knight(this.board, Color.White));
+            this.putNewPiece('g', 1, new Knight(this.board, Color.White));
+            this.putNewPiece('b', 8, new Knight(this.board, Color.Black));
+            this.putNewPiece('g', 8, new Knight(this.board, Color.Black));
+            this.putNewPiece('c', 1, new Bishop(this.board, Color.White));
+            this.putNewPiece('f', 1, new Bishop(this.board, Color.White));
+            this.putNewPiece('c', 8, new Bishop(this.board, Color.Black));
+            this.putNewPiece('f', 8, new Bishop(this.board, Color.Black));
+            this.putNewPiece('d', 1, new Queen(this.board, Color.White));
+            this.putNewPiece('d', 8, new Queen(this.board, Color.Black));
+            this.putNewPiece('e', 1, new King(this.board, Color.White));
+            this.putNewPiece('e', 8, new King(this.board, Color.Black));
+            for(int i=0; i<this.board.cols; i++) {
+                char initial = 'a';
+                char col = (Char)(Convert.ToUInt16(initial) + i);
+
+                this.putNewPiece(col, 2, new Pawn(this.board, Color.White));
+            }
+            for (int i = 0; i < this.board.cols; i++) {
+                char initial = 'a';
+                char col = (Char)(Convert.ToUInt16(initial) + i);
+
+                this.putNewPiece(col, 7, new Pawn(this.board, Color.Black));
+            }
         }
     
     }

@@ -14,11 +14,17 @@ namespace chess_project {
             Console.WriteLine();
             printCatchedPieces(chessGame);
             Console.WriteLine();
-            Console.WriteLine("Turn: " + chessGame.turn);
-            Console.WriteLine("Waiting for: " + chessGame.currentPlayer + " player");
-            if(chessGame.checkmate) {
-                Console.WriteLine("Checkmate");
+            if(!chessGame.finished) {
+                Console.WriteLine("Turn: " + chessGame.turn);
+                Console.WriteLine("Waiting for: " + chessGame.currentPlayer + " player");
+                if(chessGame.checkmate) {
+                    Console.WriteLine("Checkmate");
+                }
+            }else {
+                Console.WriteLine("CHECKMATE");
+                Console.WriteLine("Winner: " + chessGame.currentPlayer);
             }
+            
         }
         public static void printBoard(ChessBoard board) {
             for(int i=0; i < board.rows; i++) {

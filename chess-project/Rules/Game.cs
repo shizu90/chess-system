@@ -50,14 +50,18 @@ namespace chess_project.Rules {
         public void makeMove(Position origin, Position destiny) {
             Piece catchedPiece = makeMoviment(origin, destiny);
             
-            if(checkMate(this.currentPlayer)) {
+            if(isInCheck(this.currentPlayer)) {
                 undoMove(origin, destiny, catchedPiece);
                 throw new BoardException("If you do that move, your king will be in check");
             }
-            if(checkMate(enemy(this.currentPlayer))) {
+            if(isInCheck(enemy(this.currentPlayer))) {
                 this.checkmate = true;
             } else {
                 this.checkmate = false;
+            }
+
+            if(this.checkMate(enemy(this.currentPlayer))) {
+                this.finished = true;
             }
 
             this.turn++;
@@ -128,7 +132,7 @@ namespace chess_project.Rules {
             return null;
         }
 
-        public bool checkMate(Color color) {
+        public bool isInCheck(Color color) {
             Piece king = this.king(color);
             if(king == null) {
                 throw new BoardException("Inexistent king in game");
@@ -142,6 +146,30 @@ namespace chess_project.Rules {
             }
             return false;
         
+        }
+
+        public bool checkMate(Color color) {
+            if(!isInCheck(color)) {
+                return false;
+            }
+            foreach(Piece x in piecesInGame(color)) {
+                bool[,] mat = x.possibleMoviments();
+                for(int i = 0; i < this.board.rows; i++) {
+                    for(int j=0; j<this.board.cols; j++) {
+                        if (mat[i,j]) {
+                            Position origin = x.pos;
+                            Position destiny = new Position(i, j);
+                            Piece catchedPiece = makeMoviment(origin, destiny);
+                            bool testCheck = isInCheck(color);
+                            undoMove(origin, destiny, catchedPiece);
+                            if(!testCheck) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
         
         public void putNewPiece(char column, int row, Piece piece) {

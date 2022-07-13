@@ -30,6 +30,8 @@ namespace chess_project {
                         Console.ReadLine();
                     }
                 }
+                Console.Clear();
+                BoardBuilder.printChessGame(chessGame);
 
             } catch (BoardException e) {
                 Console.WriteLine(e.Message);

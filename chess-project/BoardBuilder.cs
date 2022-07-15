@@ -40,12 +40,12 @@ namespace chess_project {
         public static void printCatchedPieces(Game chessGame) {
             Console.WriteLine("Catched pieces: ");
             Console.WriteLine("White: ");
-            printSet(chessGame.getCatchedPieces(Color.White));
+            printSet(chessGame.manipulateCatchedPieces(Color.White));
             Console.WriteLine();
             Console.WriteLine("Black: ");
             ConsoleColor aux = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            printSet(chessGame.getCatchedPieces(Color.Black));
+            printSet(chessGame.manipulateCatchedPieces(Color.Black));
             Console.ForegroundColor = aux;
             Console.WriteLine();
         }

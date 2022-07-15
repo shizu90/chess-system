@@ -22,42 +22,42 @@ namespace chess_project.Rules {
 
             Position pos = new Position(0, 0);
 
-            pos.defineValue(pos.row - 1, pos.col - 2);
+            pos.defineValue(this.pos.row - 1, this.pos.col - 2);
             if(this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row - 2, pos.col - 1);
+            pos.defineValue(this.pos.row - 2, this.pos.col - 1);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row - 2, pos.col + 1);
+            pos.defineValue(this.pos.row - 2, this.pos.col + 1);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row - 1, pos.col + 2);
+            pos.defineValue(this.pos.row - 1, this.pos.col + 2);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row + 1, pos.col + 2);
+            pos.defineValue(this.pos.row + 1, this.pos.col + 2);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row + 2, pos.col + 1);
+            pos.defineValue(this.pos.row + 2, this.pos.col + 1);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row + 2, pos.col - 1);
+            pos.defineValue(this.pos.row + 2, this.pos.col - 1);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
 
-            pos.defineValue(pos.row + 1, pos.col - 2);
+            pos.defineValue(this.pos.row + 1, this.pos.col - 2);
             if (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
             }
@@ -66,7 +66,7 @@ namespace chess_project.Rules {
 
         }
         public override string ToString() {
-            return "k";
+            return "N";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace chess_project.Board {
         }
 
         public abstract bool[,] possibleMoviments();
-        
+
         public void incrementMoviments() {
             this.moviments++;
         }

@@ -15,7 +15,7 @@ namespace chess_project.Rules {
 
         private bool existsEnemy(Position pos) {
             Piece piece = board.piece(pos);
-            return piece == null || piece.color != this.color;
+            return piece != null && piece.color != this.color;
         }
 
         private bool free(Position pos) {
@@ -26,43 +26,43 @@ namespace chess_project.Rules {
             bool[,] mat = new bool[board.rows, board.cols];
 
             Position pos = new Position(0, 0);
-
             if (this.color == Color.White) {
-                pos.defineValue(pos.row - 1, pos.col);
+                pos.defineValue(this.pos.row - 1, this.pos.col);
                 if (this.board.validPosition(pos) && free(pos)) {
+                    Console.Write(pos.row);
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row - 2, pos.col);
+                pos.defineValue(this.pos.row - 2, this.pos.col);
                 if (this.board.validPosition(pos) && free(pos) && this.moviments == 0) {
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row - 1, pos.col - 1);
+                pos.defineValue(this.pos.row - 1, this.pos.col - 1);
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row - 1, pos.col + 1);
+                pos.defineValue(this.pos.row - 1, this.pos.col + 1);
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
             } else {
-                pos.defineValue(pos.row + 1, pos.col);
+                pos.defineValue(this.pos.row + 1, this.pos.col);
                 if (this.board.validPosition(pos) && free(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row + 2, pos.col);
+                pos.defineValue(this.pos.row + 2, this.pos.col);
                 if (this.board.validPosition(pos) && free(pos) && this.moviments == 0) {
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row + 1, pos.col + 1);
+                pos.defineValue(this.pos.row + 1, this.pos.col + 1);
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
-                pos.defineValue(pos.row + 1, pos.col - 1);
+                pos.defineValue(this.pos.row + 1, this.pos.col - 1);
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
             }
-
+            
             return mat;
         }
         public override string ToString() {

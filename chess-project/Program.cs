@@ -12,6 +12,7 @@ namespace chess_project {
                     try {
                         Console.Clear();
                         BoardBuilder.printChessGame(chessGame);
+                        Console.WriteLine();
                         Console.Write("Origin: ");
                         Position origin = BoardBuilder.readChessPosition().toMatrixPosition();
                         chessGame.validateOriginPosition(origin);
@@ -19,12 +20,12 @@ namespace chess_project {
 
                         Console.Clear();
                         BoardBuilder.printBoardMoviments(chessGame.board, possiblePositions);
-
+                        Console.WriteLine();
                         Console.Write("Destiny: ");
                         Position destiny = BoardBuilder.readChessPosition().toMatrixPosition();
                         chessGame.validateDestinyPosition(origin, destiny);
 
-                        chessGame.makeMove(origin, destiny);
+                        chessGame.executeTurn(origin, destiny);
                     }catch(BoardException e) {
                         Console.WriteLine(e.Message);
                         Console.ReadLine();

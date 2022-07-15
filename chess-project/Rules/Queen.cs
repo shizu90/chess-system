@@ -27,7 +27,7 @@ namespace chess_project.Rules {
             Position pos = new Position(0, 0);
 
             //west
-            pos.defineValue(pos.row, pos.col - 1);
+            pos.defineValue(this.pos.row, this.pos.col - 1);
             while(this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if(this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -38,7 +38,7 @@ namespace chess_project.Rules {
             }
 
             //east
-            pos.defineValue(pos.row, pos.col + 1);
+            pos.defineValue(this.pos.row, this.pos.col + 1);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -49,7 +49,7 @@ namespace chess_project.Rules {
             }
 
             //north
-            pos.defineValue(pos.row - 1, pos.col);
+            pos.defineValue(this.pos.row - 1, this.pos.col);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -60,7 +60,7 @@ namespace chess_project.Rules {
             }
 
             //south 
-            pos.defineValue(pos.row + 1, pos.col);
+            pos.defineValue(this.pos.row + 1, this.pos.col);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -71,7 +71,7 @@ namespace chess_project.Rules {
             }
 
             //northwest
-            pos.defineValue(pos.row - 1, pos.col - 1);
+            pos.defineValue(this.pos.row - 1, this.pos.col - 1);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -82,7 +82,7 @@ namespace chess_project.Rules {
             }
 
             //northeast
-            pos.defineValue(pos.row - 1, pos.col + 1);
+            pos.defineValue(this.pos.row - 1, this.pos.col + 1);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -93,7 +93,7 @@ namespace chess_project.Rules {
             }
 
             //southwest
-            pos.defineValue(pos.row + 1, pos.col + 1);
+            pos.defineValue(this.pos.row + 1, this.pos.col + 1);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {
@@ -104,7 +104,7 @@ namespace chess_project.Rules {
             }
 
             //southeast
-            pos.defineValue(pos.row + 1, pos.col - 1);
+            pos.defineValue(this.pos.row + 1, this.pos.col - 1);
             while (this.board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.col] = true;
                 if (this.board.piece(pos) != null && this.board.piece(pos).color != color) {

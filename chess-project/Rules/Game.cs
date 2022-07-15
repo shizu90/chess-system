@@ -14,6 +14,7 @@ namespace chess_project.Rules {
         private HashSet<Piece> pieces;
         private HashSet<Piece> catchedPieces;
         public bool checkmate { get; private set; }
+        public Piece enPassantVulnerability { get; private set; }
 
         public Game() {
             this.board = new ChessBoard(8, 8);
@@ -23,6 +24,7 @@ namespace chess_project.Rules {
             this.checkmate = false;
             this.pieces = new HashSet<Piece>();
             this.catchedPieces = new HashSet<Piece>();
+            this.enPassantVulnerability = null;
             putPieces();
         }
 
@@ -35,7 +37,7 @@ namespace chess_project.Rules {
                 catchedPieces.Add(catchedPiece);
             }
 
-            // #jogadaespecial roque pequeno
+            // #kingside play
             if (p is King && destiny.col == origin.col + 2) {
                 Position originRook = new Position(origin.row, origin.col + 3);
                 Position destinyRook = new Position(origin.row, origin.col + 1);
@@ -44,7 +46,7 @@ namespace chess_project.Rules {
                 board.putPiece(Rook, destinyRook);
             }
 
-            // #jogadaespecial roque grande
+            // #queenside play
             if (p is King && destiny.col == origin.col - 2) {
                 Position originRook = new Position(origin.row, origin.col - 4);
                 Position destinyRook = new Position(origin.row, origin.col - 1);
@@ -53,19 +55,19 @@ namespace chess_project.Rules {
                 board.putPiece(Rook, destinyRook);
             }
 
-            // #jogadaespecial en passant
-            /*if (p is Peao) {
-                if (origem.coluna != destino.coluna && pecaCapturada == null) {
-                    Posicao posP;
-                    if (p.cor == Cor.Branca) {
-                        posP = new Posicao(destino.linha + 1, destino.coluna);
+            // #enPassant
+            if (p is Pawn) {
+                if (origin.col != destiny.col && catchedPiece == null) {
+                    Position posP;
+                    if (p.color == Color.White) {
+                        posP = new Position(destiny.row + 1, destiny.col);
                     } else {
-                        posP = new Posicao(destino.linha - 1, destino.coluna);
+                        posP = new Position(destiny.row - 1, destiny.col);
                     }
-                    pecaCapturada = tab.retirarPeca(posP);
-                    capturadas.Add(pecaCapturada);
+                    catchedPiece = board.removePiece(posP);
+                    catchedPieces.Add(catchedPiece);
                 }
-            }*/
+            }
 
             return catchedPiece;
         }
@@ -79,7 +81,7 @@ namespace chess_project.Rules {
             }
             board.putPiece(piece, origin);
 
-            // #jogadaespecial roque pequeno
+            // #kingside play
             if (piece is King && destiny.col == origin.col + 2) {
                 Position originRook = new Position(origin.row, origin.col + 3);
                 Position destinyRook = new Position(origin.row, origin.col + 1);
@@ -88,7 +90,7 @@ namespace chess_project.Rules {
                 board.putPiece(Rook, originRook);
             }
 
-            // #jogadaespecial roque grande
+            // #queenside play
             if (piece is King && destiny.col == origin.col - 2) {
                 Position originRook = new Position(origin.row, origin.col - 4);
                 Position destinyRook = new Position(origin.row, origin.col - 1);
@@ -97,19 +99,19 @@ namespace chess_project.Rules {
                 board.putPiece(Rook, originRook);
             }
 
-            // #jogadaespecial en passant
-            /*if (p is Peao) {
-                if (origem.coluna != destino.coluna && pecaCapturada == vulneravelEnPassant) {
-                    Peca peao = tab.retirarPeca(destino);
-                    Posicao posP;
-                    if (p.cor == Cor.Branca) {
-                        posP = new Posicao(3, destino.coluna);
+            // #enPassant
+            if (piece is Pawn) {
+                if (origin.col != destiny.col && catchedPiece == this.enPassantVulnerability) {
+                    Piece pawn = board.removePiece(destiny);
+                    Position posP;
+                    if (piece.color == Color.White) {
+                        posP = new Position(3, destiny.col);
                     } else {
-                        posP = new Posicao(4, destino.coluna);
+                        posP = new Position(4, destiny.col);
                     }
-                    tab.colocarPeca(peao, posP);
+                    board.putPiece(pawn, posP);
                 }
-            }*/
+            }
         }
 
         public void executeTurn(Position origin, Position destiny) {
@@ -146,12 +148,13 @@ namespace chess_project.Rules {
                 changePlayer();
             }
 
-            // #jogadaespecial en passant
-            /*if (p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2)) {
-                vulneravelEnPassant = p;
+
+            // #enPassant
+            if (piece is Pawn && (destiny.row == origin.row - 2 || destiny.row == origin.row + 2)) {
+                this.enPassantVulnerability = piece;
             } else {
-                vulneravelEnPassant = null;
-            }*/
+                this.enPassantVulnerability = null;
+            }
 
         }
 
@@ -271,14 +274,14 @@ namespace chess_project.Rules {
             putNewPiece('f', 1, new Bishop(board, Color.White));
             putNewPiece('g', 1, new Knight(board, Color.White));
             putNewPiece('h', 1, new Rook(board, Color.White));
-            putNewPiece('a', 2, new Pawn(board, Color.White));
-            putNewPiece('b', 2, new Pawn(board, Color.White));
-            putNewPiece('c', 2, new Pawn(board, Color.White));
-            putNewPiece('d', 2, new Pawn(board, Color.White));
-            putNewPiece('e', 2, new Pawn(board, Color.White));
-            putNewPiece('f', 2, new Pawn(board, Color.White));
-            putNewPiece('g', 2, new Pawn(board, Color.White));
-            putNewPiece('h', 2, new Pawn(board, Color.White));
+            putNewPiece('a', 2, new Pawn(board, Color.White, this));
+            putNewPiece('b', 2, new Pawn(board, Color.White, this));
+            putNewPiece('c', 2, new Pawn(board, Color.White, this));
+            putNewPiece('d', 2, new Pawn(board, Color.White, this));
+            putNewPiece('e', 2, new Pawn(board, Color.White, this));
+            putNewPiece('f', 2, new Pawn(board, Color.White, this));
+            putNewPiece('g', 2, new Pawn(board, Color.White, this));
+            putNewPiece('h', 2, new Pawn(board, Color.White, this));
 
             putNewPiece('a', 8, new Rook(board, Color.Black));
             putNewPiece('b', 8, new Knight(board, Color.Black));
@@ -288,14 +291,14 @@ namespace chess_project.Rules {
             putNewPiece('f', 8, new Bishop(board, Color.Black));
             putNewPiece('g', 8, new Knight(board, Color.Black));
             putNewPiece('h', 8, new Rook(board, Color.Black));
-            putNewPiece('a', 7, new Pawn(board, Color.Black));
-            putNewPiece('b', 7, new Pawn(board, Color.Black));
-            putNewPiece('c', 7, new Pawn(board, Color.Black));
-            putNewPiece('d', 7, new Pawn(board, Color.Black));
-            putNewPiece('e', 7, new Pawn(board, Color.Black));
-            putNewPiece('f', 7, new Pawn(board, Color.Black));
-            putNewPiece('g', 7, new Pawn(board, Color.Black));
-            putNewPiece('h', 7, new Pawn(board, Color.Black));
+            putNewPiece('a', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('b', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('c', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('d', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('e', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('f', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('g', 7, new Pawn(board, Color.Black, this));
+            putNewPiece('h', 7, new Pawn(board, Color.Black, this));
         }
 
     }

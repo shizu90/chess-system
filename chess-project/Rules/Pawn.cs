@@ -9,8 +9,10 @@ using chess_project.Rules;
 namespace chess_project.Rules {
     internal class Pawn: Piece {
 
-        public Pawn(ChessBoard board, Color color) : base(color, board) {
+        private Game chessGame;
 
+        public Pawn(ChessBoard board, Color color, Game chessGame) : base(color, board) {
+            this.chessGame = chessGame;
         }
 
         private bool existsEnemy(Position pos) {
@@ -44,6 +46,18 @@ namespace chess_project.Rules {
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
                 }
+
+                //#enPassant
+                if(this.pos.row == 3) {
+                    Position left = new Position(this.pos.row, this.pos.col - 1);
+                    if (board.validPosition(left) && existsEnemy(left) && board.piece(left) == chessGame.enPassantVulnerability) {
+                        mat[left.row - 1, left.col] = true;
+                    }
+                    Position right = new Position(this.pos.row, this.pos.col + 1);
+                    if (board.validPosition(right) && existsEnemy(right) && board.piece(right) == chessGame.enPassantVulnerability) {
+                        mat[right.row - 1, right.col] = true;
+                    }
+                }
             } else {
                 pos.defineValue(this.pos.row + 1, this.pos.col);
                 if (this.board.validPosition(pos) && free(pos)) {
@@ -60,6 +74,17 @@ namespace chess_project.Rules {
                 pos.defineValue(this.pos.row + 1, this.pos.col - 1);
                 if (this.board.validPosition(pos) && existsEnemy(pos)) {
                     mat[pos.row, pos.col] = true;
+                }
+                //#enPassant
+                if (this.pos.row == 4) {
+                    Position left = new Position(this.pos.row, this.pos.col - 1);
+                    if (board.validPosition(left) && existsEnemy(left) && board.piece(left) == chessGame.enPassantVulnerability) {
+                        mat[left.row + 1, left.col] = true;
+                    }
+                    Position right = new Position(this.pos.row, this.pos.col + 1);
+                    if (board.validPosition(right) && existsEnemy(right) && board.piece(right) == chessGame.enPassantVulnerability) {
+                        mat[right.row + 1, right.col] = true;
+                    }
                 }
             }
             

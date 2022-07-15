@@ -124,16 +124,16 @@ namespace chess_project.Rules {
 
             Piece piece = board.piece(destiny);
 
-            // #jogadaespecial promocao
-            /*if (p is Peao) {
-                if ((p.cor == Cor.Branca && destino.linha == 0) || (p.cor == Cor.Preta && destino.linha == 7)) {
-                    p = tab.retirarPeca(destino);
-                    pecas.Remove(p);
-                    Peca dama = new Dama(tab, p.cor);
-                    tab.colocarPeca(dama, destino);
-                    pecas.Add(dama);
+            // #promotion pawn play
+            if (piece is Pawn) {
+                if ((piece.color == Color.White && destiny.row == 0) || (piece.color == Color.Black && destiny.row == 7)) {
+                    piece = board.removePiece(destiny);
+                    pieces.Remove(piece);
+                    Piece queenPromotion = new Queen(board, piece.color);
+                    board.putPiece(queenPromotion, destiny);
+                    pieces.Add(queenPromotion);
                 }
-            }*/
+            }
 
             if (isInCheck(adversary(currentPlayer))) {
                 checkmate = true;
